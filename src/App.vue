@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
     <Navbar />
+    <AddForm v-if="compose"/>
+    <JokeEdit />
     
   </div>
 </template>
@@ -17,6 +18,11 @@ export default {
     Navbar,
     AddForm,
     JokeEdit
+  },
+  data() {
+    return {
+      compose: false
+    }
   }
 }
 </script>

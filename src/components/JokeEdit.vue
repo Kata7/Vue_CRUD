@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <p>JokeEdit</p>
+  </div>
   
 </template>
 

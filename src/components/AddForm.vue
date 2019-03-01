@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <p>AddForm</p>
+  </div>
   
 </template>
 
