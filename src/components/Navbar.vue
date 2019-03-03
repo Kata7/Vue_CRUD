@@ -5,8 +5,8 @@
     </div>
     <div class='link-container'>
       <ul class='links'>
-        <li class='button'><a href='#'>Link 1</a></li>
-        <li class='button'><a href='#'>Link 2</a></li>
+        <li class='button'><a href='#'>About</a></li>
+        <li class='button'><a href='#'>Contact</a></li>
       </ul>
     </div>
   </div> 

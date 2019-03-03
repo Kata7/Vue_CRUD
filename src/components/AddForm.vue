@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p>AddForm</p>
+    <input></input>
+    <input></input>
   </div>
   
 </template>

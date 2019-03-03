@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <Navbar />
+    <button v-on:click="this.toggleCompose">Add Joke</button>
     <AddForm v-if="compose"/>
-    <JokeEdit />
+    <JokeEdit v-for="joke in data" v-bind:key="joke.id" v-bind:joke="joke"/>
     
   </div>
 </template>
@@ -21,8 +22,24 @@ export default {
   },
   data() {
     return {
-      compose: false
+      compose: false,
+      data: [],
+      url: "",
+      joke: ""
     }
+  },
+  methods: {
+    toggleCompose() {
+      this.compose = !this.compose
+    },
+    getData() {
+      fetch('http://silly-dilf.herokuapp.com')
+      .then(response => response.json())
+      .then(responseJSON => this.data = responseJSON)
+    }
+  },
+  created: function() {
+    this.getData()
   }
 }
 </script>
