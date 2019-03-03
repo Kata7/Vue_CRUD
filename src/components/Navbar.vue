@@ -27,6 +27,7 @@ export default {
     justify-content: space-between;
     border: 2px solid black;
     align-content: center;
+    min-width: 600px;
   }
 
   .title-container {

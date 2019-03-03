@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navbar />
-    <button v-on:click="this.toggleCompose">Add Joke</button>
+    <button v-if="!compose" v-on:click="this.toggleCompose">Add Joke</button>
     <AddForm v-if="compose"/>
     <JokeEdit v-for="joke in data" v-bind:key="joke.id" v-bind:joke="joke"/>
     
@@ -44,13 +44,21 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+  }
+
+  button {
+    width: 80%;
+    border: 1px solid black;
+    background: white;
+    margin: 5px 0px;
+    padding: 5px;
+  }
 </style>
