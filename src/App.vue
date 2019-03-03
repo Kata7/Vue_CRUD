@@ -14,6 +14,7 @@
       v-for="joke in data"
       v-bind:key="joke.id" 
       v-bind:joke="joke"
+      v-on:delete="deleteJoke($event)"
     />
     
   </div>
@@ -36,7 +37,12 @@ export default {
       compose: false,
       data: [],
       url: "",
-      joke: ""
+      joke: "",
+      edit: {
+        id: "",
+        joke: "",
+        url: ""
+      }
     }
   },
   methods: {
@@ -52,6 +58,7 @@ export default {
     },
     addJoke() {
       const sendObject = {
+        id: "unk",
         text: this.joke,
         url: this.url
       }
@@ -63,10 +70,26 @@ export default {
         }
       })
       .then(res => console.log('joke added'))
+      this.data.push(sendObject)
     },
     submitClicked() {
       this.toggleCompose()
       this.addJoke()
+    },
+    deleteJoke(id) {
+      const sendObject = {
+        id: id,
+        text: "",
+        url: ""
+      }
+      fetch('http://silly-dilf.herokuapp.com', {
+        method: 'DELETE',
+        body: JSON.stringify(sendObject),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => console.log('joke removed'))
     }
   },
   created: function() {

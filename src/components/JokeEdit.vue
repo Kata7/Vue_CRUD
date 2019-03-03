@@ -9,7 +9,7 @@
     </div>
     <div class="buttons">
       <button class="edit">EDIT</button>
-      <button class="delete">DELETE</button>
+      <button v-on:click="$emit('delete', joke.id)" class="delete">DELETE</button>
     </div>
   </div>
   
