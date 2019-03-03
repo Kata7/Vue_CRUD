@@ -4,15 +4,14 @@
       ID: {{joke.id}}
     </div>
     <div class="inputs">
-      <input v-on:input="$emit('editJokeText', {id: joke.id, joke: $event.target.value})" v-bind:value="joke.text"></input>
-      <input v-on:input="$emit('editJokeUrl', {id: joke.id, url: $event.target.value})" v-bind:value="joke.url"></input>
+      <input v-on:input="$emit('editJokeText', {id: joke.id, joke: $event.target.value})" v-bind:value="joke.text">
+      <input v-on:input="$emit('editJokeUrl', {id: joke.id, url: $event.target.value})" v-bind:value="joke.url">
     </div>
     <div class="buttons">
       <button v-on:click="$emit('editJoke')" class="edit">SAVE</button>
       <button v-on:click="$emit('delete', joke.id)" class="delete">DELETE</button>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -22,7 +21,6 @@ export default {
     joke: Object,
     updateJoke: Function
   }
-  
 }
 </script>
 
@@ -43,7 +41,6 @@ export default {
     align-content: center;
     justify-content: center;
   }
-
 
   .inputs {
     display: flex;
@@ -73,4 +70,3 @@ export default {
   }
 
 </style>
-
