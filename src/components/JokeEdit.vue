@@ -19,7 +19,8 @@
 export default {
   name: 'JokeEdit',
   props: {
-    joke: Object
+    joke: Object,
+    updateJoke: Function
   }
   
 }

@@ -1,9 +1,20 @@
 <template>
   <div id="app">
     <Navbar />
-    <button v-if="!compose" v-on:click="this.toggleCompose">Add Joke</button>
-    <AddForm v-if="compose"/>
-    <JokeEdit v-for="joke in data" v-bind:key="joke.id" v-bind:joke="joke"/>
+    <button 
+      v-if="!compose" 
+      v-on:click="this.toggleCompose">ADD JOKE</button>
+    <AddForm 
+      v-if="compose"
+      v-on:newJokeSubmit="this.submitClicked"
+      v-on:updateAddJoke="joke=$event"
+      v-on:updateAddURL="url=$event"
+      />
+    <JokeEdit
+      v-for="joke in data"
+      v-bind:key="joke.id" 
+      v-bind:joke="joke"
+    />
     
   </div>
 </template>
@@ -29,13 +40,33 @@ export default {
     }
   },
   methods: {
-    toggleCompose() {
-      this.compose = !this.compose
-    },
     getData() {
       fetch('http://silly-dilf.herokuapp.com')
       .then(response => response.json())
-      .then(responseJSON => this.data = responseJSON)
+      .then(responseJSON => {
+        return this.data = responseJSON
+        })
+    },
+    toggleCompose() {
+      this.compose = !this.compose
+    },
+    addJoke() {
+      const sendObject = {
+        text: this.joke,
+        url: this.url
+      }
+      fetch('http://silly-dilf.herokuapp.com', {
+        method: 'POST',
+        body: JSON.stringify(sendObject),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => console.log('joke added'))
+    },
+    submitClicked() {
+      this.toggleCompose()
+      this.addJoke()
     }
   },
   created: function() {
@@ -55,10 +86,12 @@ export default {
   }
 
   button {
-    width: 80%;
-    border: 1px solid black;
-    background: white;
+    width: 100%;
+    border: none;
+    background: blue;
+    color: white;
     margin: 5px 0px;
     padding: 5px;
+    opacity: 0.8;
   }
 </style>

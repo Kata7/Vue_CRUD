@@ -1,8 +1,8 @@
 <template>
   <div class='inputDiv'>
-    <input placeholder='JOKE'></input>
-    <input placeholder='URL'></input>
-    <button>SUBMIT</button>
+    <input v-on:input="$emit('updateAddJoke', $event.target.value)" placeholder='JOKE'></input>
+    <input v-on:input="$emit('updateAddURL', $event.target.value)" placeholder='URL'></input>
+    <button v-on:click="$emit('newJokeSubmit')">SUBMIT</button>
   </div>
   
 </template>
