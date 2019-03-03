@@ -4,11 +4,11 @@
       ID: {{joke.id}}
     </div>
     <div class="inputs">
-      <input v-bind:value="joke.text"></input>
-      <input v-bind:value="joke.url"></input>
+      <input v-on:input="$emit('editJokeText', {id: joke.id, joke: $event.target.value})" v-bind:value="joke.text"></input>
+      <input v-on:input="$emit('editJokeUrl', {id: joke.id, url: $event.target.value})" v-bind:value="joke.url"></input>
     </div>
     <div class="buttons">
-      <button class="edit">EDIT</button>
+      <button v-on:click="$emit('editJoke')" class="edit">SAVE</button>
       <button v-on:click="$emit('delete', joke.id)" class="delete">DELETE</button>
     </div>
   </div>

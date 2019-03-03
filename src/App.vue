@@ -3,10 +3,10 @@
     <Navbar />
     <button 
       v-if="!compose" 
-      v-on:click="this.toggleCompose">ADD JOKE</button>
+      v-on:click="toggleCompose">ADD JOKE</button>
     <AddForm 
       v-if="compose"
-      v-on:newJokeSubmit="this.submitClicked"
+      v-on:newJokeSubmit="submitClicked"
       v-on:updateAddJoke="joke=$event"
       v-on:updateAddURL="url=$event"
       />
@@ -15,6 +15,9 @@
       v-bind:key="joke.id" 
       v-bind:joke="joke"
       v-on:delete="deleteJoke($event)"
+      v-on:editJokeText="edit.id=$event.id, edit.joke=$event.joke, edit.url=edit.url"
+      v-on:editJokeUrl="edit.id=$event.id, edit.url=$event.url, edit.joke=edit.joke"
+      v-on:editJoke="editJoke"
     />
     
   </div>
@@ -57,20 +60,24 @@ export default {
       this.compose = !this.compose
     },
     addJoke() {
-      const sendObject = {
-        id: "unk",
-        text: this.joke,
-        url: this.url
-      }
-      fetch('http://silly-dilf.herokuapp.com', {
-        method: 'POST',
-        body: JSON.stringify(sendObject),
-        headers:{
-          'Content-Type': 'application/json'
+      if (this.joke !== "" && this.url !== "") {
+        const sendObject = {
+          id: "unk",
+          text: this.joke,
+          url: this.url
         }
-      })
-      .then(res => console.log('joke added'))
-      this.data.push(sendObject)
+        fetch('http://silly-dilf.herokuapp.com', {
+          method: 'POST',
+          body: JSON.stringify(sendObject),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(res => console.log('joke added'))
+
+        // Add joke locally
+        this.data.push(sendObject)
+      }
     },
     submitClicked() {
       this.toggleCompose()
@@ -90,6 +97,32 @@ export default {
         }
       })
       .then(res => console.log('joke removed'))
+
+      // Remove joke locally
+      this.data = this.data.filter(joke => joke.id !== id)
+    },
+    editJoke() {
+      if (this.edit.id !== "") {
+        if (this.edit.joke === "") {
+          this.edit.joke = this.data.filter(joke => joke.id === this.edit.id)[0].text
+        }
+        if (this.edit.url === "") {
+          this.edit.url = this.data.filter(joke => joke.id === this.edit.id)[0].url
+        }
+        const sendObject = {
+          id: this.edit.id,
+          text: this.edit.joke,
+          url: this.edit.url
+        }
+        fetch('http://silly-dilf.herokuapp.com', {
+          method: 'PATCH',
+          body: JSON.stringify(sendObject),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(res => console.log('joke updated'))
+      }
     }
   },
   created: function() {
